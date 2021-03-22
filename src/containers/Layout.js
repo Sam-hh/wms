@@ -1,5 +1,5 @@
 import React, { useContext, Suspense, useEffect, lazy } from 'react'
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom'
+import { Switch, Route, Redirect, useLocation, useHistory } from 'react-router-dom'
 import routes from '../routes'
 
 import Sidebar from '../components/Sidebar'
@@ -11,12 +11,19 @@ import { SidebarContext } from '../context/SidebarContext'
 const Page404 = lazy(() => import('../pages/404'))
 
 function Layout() {
+  const history = useHistory();
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext)
   let location = useLocation()
 
   useEffect(() => {
     closeSidebar()
   }, [location])
+  
+  useEffect(() => {
+    if (!localStorage.getItem("authToken")) {
+      history.push("/login")
+    }
+  },[history])
 
   return (
     <div

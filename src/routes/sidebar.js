@@ -6,6 +6,7 @@
  * `routes/index.js`
  */
 const routes = [
+  [
   {
     path: '/app/dashboard', // the url
     icon: 'HomeIcon', // the component being exported from icons/index.js
@@ -67,7 +68,34 @@ const routes = [
         name: 'Blank',
       },
     ],
+    },
+  ], [
+  {
+    path: '/app/dashboard', // the url
+    icon: 'HomeIcon', // the component being exported from icons/index.js
+    name: 'Dashboard', // name that appear in Sidebar
   },
+  {
+    path: '/app/forms',
+    icon: 'FormsIcon',
+    name: 'Forms',
+  },
+  {
+    path: '/app/cards',
+    icon: 'CardsIcon',
+    name: 'Cards',
+  },
+  {
+    path: '/app/charts',
+    icon: 'ChartsIcon',
+    name: 'Charts',
+  },
+  {
+    path: '/app/buttons',
+    icon: 'ButtonsIcon',
+    name: 'Buttons',
+    },
+  ]
 ]
 
 export default routes

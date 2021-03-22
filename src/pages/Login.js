@@ -38,7 +38,9 @@ function Login() {
                 <Input className="mt-1" type="password" placeholder="***************" />
               </Label>
 
-              <Button className="mt-4" block tag={Link} to="/app">
+              <Button onClick={() => {
+                localStorage.setItem("authToken", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzbmlwZXh0dCIsImlhdCI6MTYxNjM1MTkwMiwiZXhwIjoxNjQ3ODg3OTAyLCJhdWQiOiIiLCJzdWIiOiIiLCJ1c2VyVHlwZSI6IkVtcGxveWVlIn0.NOZLR7v5J4NzRFgD_riErINfnlqNpjUH1OpgVBoQGOg")
+              }} className="mt-4" block tag={Link} to="/app">
                 Log in
               </Button>
 

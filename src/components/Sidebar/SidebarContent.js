@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import routes from '../../routes/sidebar'
 import { NavLink, Route } from 'react-router-dom'
 import * as Icons from '../../icons'
@@ -11,13 +11,21 @@ function Icon({ icon, ...props }) {
 }
 
 function SidebarContent() {
+  const [userType,setUserType] = useState([])
+  useEffect(() => {
+    if(localStorage.getItem("userType") == "Employee")
+      setUserType(routes[0])
+    else
+      setUserType(routes[1])
+  }, [])
+
   return (
     <div className="py-4 text-gray-500 dark:text-gray-400">
-      <a className="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">
-        Windmill
+      <a className="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="/">
+        WMS
       </a>
       <ul className="mt-6">
-        {routes.map((route) =>
+        {userType.map((route) =>
           route.routes ? (
             <SidebarSubmenu route={route} key={route.name} />
           ) : (
