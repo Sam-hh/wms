@@ -3,7 +3,9 @@ import React from 'react'
 function ThemedSuspense() {
   return (
     <div className="w-full h-screen p-6 text-lg font-medium text-gray-600 dark:text-gray-400 dark:bg-gray-900">
-      Loading...
+      <div className="w-1/3 h-1/3 animate-spin" style={{
+         borderTopColor: "#3498db"
+       }} />
     </div>
   )
 }
