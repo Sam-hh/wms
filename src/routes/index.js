@@ -1,15 +1,20 @@
-import { lazy } from 'react'
+import { lazy } from "react";
 
 // use lazy for better code splitting, a.k.a. load faster
-const Dashboard = lazy(() => import('../pages/Dashboard'))
-const Forms = lazy(() => import('../pages/Forms'))
-const Cards = lazy(() => import('../pages/Cards'))
-const Charts = lazy(() => import('../pages/Charts'))
-const Buttons = lazy(() => import('../pages/Buttons'))
-const Modals = lazy(() => import('../pages/Modals'))
-const Tables = lazy(() => import('../pages/Tables'))
-const Page404 = lazy(() => import('../pages/404'))
-const Blank = lazy(() => import('../pages/Blank'))
+const Dashboard = lazy(() => import("../pages/Dashboard"));
+const Forms = lazy(() => import("../pages/Forms"));
+const Cards = lazy(() => import("../pages/Cards"));
+const Charts = lazy(() => import("../pages/Charts"));
+const Buttons = lazy(() => import("../pages/Buttons"));
+const Modals = lazy(() => import("../pages/Modals"));
+const Tables = lazy(() => import("../pages/Tables"));
+const Page404 = lazy(() => import("../pages/404"));
+const Blank = lazy(() => import("../pages/Blank"));
+const manageUsers = lazy(() => import("../pages/manageUsers"));
+const addUser = lazy(() => import("../pages/addUser"));
+const addParking = lazy(() => import("../pages/AddParking"));
+const ParkedVehicles = lazy(() => import("../pages/ParkedVehicles"));
+const PMSSettings = lazy(() => import("../pages/PMSSettings"));
 
 /**
  * ⚠ These are internal routes!
@@ -23,41 +28,61 @@ const Blank = lazy(() => import('../pages/Blank'))
  */
 const routes = [
   {
-    path: '/dashboard', // the url
+    path: "/dashboard", // the url
     component: Dashboard, // view rendered
   },
   {
-    path: '/forms',
+    path: "/forms",
     component: Forms,
   },
   {
-    path: '/cards',
+    path: "/cards",
     component: Cards,
   },
   {
-    path: '/charts',
+    path: "/charts",
     component: Charts,
   },
   {
-    path: '/buttons',
+    path: "/buttons",
     component: Buttons,
   },
   {
-    path: '/modals',
+    path: "/modals",
     component: Modals,
   },
   {
-    path: '/tables',
+    path: "/tables",
     component: Tables,
   },
   {
-    path: '/404',
+    path: "/404",
     component: Page404,
   },
   {
-    path: '/blank',
+    path: "/blank",
     component: Blank,
   },
-]
+  {
+    path: "/manage-users",
+    component: manageUsers,
+  },
+  {
+    path: "/add-user",
+    component: addUser,
+  },
+  {
+    path: "/add-parking",
+    component: addParking,
+  },
+  {
+    path: "/parked-vehicles",
+    component: ParkedVehicles,
+  },
+  {
+    path: "/pms-settings",
+    component: PMSSettings,
+  },
+];
 
-export default routes
+export default routes;
