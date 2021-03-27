@@ -49,7 +49,7 @@ function manageUsers() {
           </div>
           <Input
             className="pl-8 text-gray-700"
-            placeholder="Search By vehicle Name or number"
+            placeholder="Search By vehicle name or number"
             aria-label="Search"
           />
         </div>
@@ -70,9 +70,9 @@ function manageUsers() {
                 <TableCell>
                   <div className="flex items-center text-sm">
                     <div>
-                      <p className="font-semibold">{user.name}</p>
+                      <p className="font-semibold">{"Vehicle Name"}</p>
                       <p className="text-xs text-gray-600 dark:text-gray-400">
-                        {user.job}
+                        {"Vehicle Number"}
                       </p>
                     </div>
                   </div>

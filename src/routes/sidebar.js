@@ -79,22 +79,22 @@ const routes = [
     {
       path: "/app/forms",
       icon: "FormsIcon",
-      name: "Forms",
+      name: "Shop",
     },
     {
       path: "/app/cards",
       icon: "CardsIcon",
-      name: "Cards",
+      name: "Products",
     },
     {
       path: "/app/charts",
       icon: "ChartsIcon",
-      name: "Charts",
+      name: "Sales",
     },
     {
-      path: "/app/buttons",
+      path: "/app/tickets",
       icon: "ButtonsIcon",
-      name: "Buttons",
+      name: "Tickets",
     },
     {
       icon: "UserIcon",

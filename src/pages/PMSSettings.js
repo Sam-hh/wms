@@ -1,7 +1,5 @@
 import React from "react";
-import { Input, Label, Button, Select, Textarea } from "@windmill/react-ui";
 import PageTitle from "../components/Typography/PageTitle";
-import { CarIcon, ClockIcon, MailIcon, PhoneIcon, UserIcon } from "../icons";
 import SectionTitle from "../components/Typography/SectionTitle";
 
 function PMSSettings() {
