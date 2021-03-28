@@ -16,6 +16,8 @@ const addParking = lazy(() => import("../pages/AddParking"));
 const ParkedVehicles = lazy(() => import("../pages/ParkedVehicles"));
 const PMSSettings = lazy(() => import("../pages/PMSSettings"));
 const Tickets = lazy(() => import("../pages/Tickets"));
+const SalesList = lazy(() => import("../pages/SalesList"));
+const SaleStatistics = lazy(() => import("../pages/SalesStatistic"));
 
 /**
  * ⚠ These are internal routes!
@@ -83,6 +85,14 @@ const routes = [
   {
     path: "/pms-settings",
     component: PMSSettings,
+  },
+  {
+    path: "/sales-statistics",
+    component: SaleStatistics,
+  },
+  {
+    path: "/sales-list",
+    component: SalesList,
   },
   {
     path: "/tickets",

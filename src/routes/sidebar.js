@@ -82,14 +82,38 @@ const routes = [
       name: "Shop",
     },
     {
-      path: "/app/cards",
       icon: "CardsIcon",
+      routes: [
+        // submenu
+        {
+          path: "/app/cards",
+          name: "Manage Categories",
+        },
+        {
+          path: "/app/cards",
+          name: "Add Products",
+        },
+        {
+          path: "/app/cards",
+          name: "Manage Products",
+        },
+      ],
       name: "Products",
     },
     {
-      path: "/app/charts",
       icon: "ChartsIcon",
       name: "Sales",
+      routes: [
+        // submenu
+        {
+          path: "/app/sales-list",
+          name: "Sales Lists",
+        },
+        {
+          path: "/app/sales-statistics",
+          name: "Statistics",
+        },
+      ],
     },
     {
       path: "/app/tickets",
