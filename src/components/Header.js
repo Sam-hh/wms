@@ -1,26 +1,22 @@
-import React, { useContext, useState } from 'react'
-import { SidebarContext } from '../context/SidebarContext'
-import {
-  BellIcon,
-  MenuIcon,
-  OutlineLogoutIcon,
-} from '../icons'
-import { Avatar, Badge, Dropdown, DropdownItem } from '@windmill/react-ui'
-import { useHistory } from 'react-router'
+import React, { useContext, useState } from "react";
+import { SidebarContext } from "../context/SidebarContext";
+import { BellIcon, MenuIcon, OutlineLogoutIcon, UserIcon } from "../icons";
+import { Avatar, Badge, Dropdown, DropdownItem } from "@windmill/react-ui";
+import { useHistory } from "react-router";
 
 function Header() {
-  const history = useHistory()
-  const { toggleSidebar } = useContext(SidebarContext)
+  const history = useHistory();
+  const { toggleSidebar } = useContext(SidebarContext);
 
-  const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false)
-  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
+  const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
   function handleNotificationsClick() {
-    setIsNotificationsMenuOpen(!isNotificationsMenuOpen)
+    setIsNotificationsMenuOpen(!isNotificationsMenuOpen);
   }
 
   function handleProfileClick() {
-    setIsProfileMenuOpen(!isProfileMenuOpen)
+    setIsProfileMenuOpen(!isProfileMenuOpen);
   }
 
   return (
@@ -61,7 +57,7 @@ function Header() {
                 <span>Sales</span>
                 <Badge type="danger">2</Badge>
               </DropdownItem>
-              <DropdownItem onClick={() => alert('Alerts!')}>
+              <DropdownItem onClick={() => alert("Alerts!")}>
                 <span>Alerts</span>
               </DropdownItem>
             </Dropdown>
@@ -86,11 +82,24 @@ function Header() {
               isOpen={isProfileMenuOpen}
               onClose={() => setIsProfileMenuOpen(false)}
             >
-              <DropdownItem onClick={() => {
-                localStorage.removeItem("authToken");
-                history.push("/")
-              }}>
-                <OutlineLogoutIcon className="w-4 h-4 mr-3" aria-hidden="true" />
+              <DropdownItem
+                onClick={() => {
+                  history.push("/app/me");
+                }}
+              >
+                <UserIcon className="w-4 h-4 mr-3" aria-hidden="true" />
+                <span>Profile</span>
+              </DropdownItem>
+              <DropdownItem
+                onClick={() => {
+                  localStorage.removeItem("authToken");
+                  history.push("/");
+                }}
+              >
+                <OutlineLogoutIcon
+                  className="w-4 h-4 mr-3"
+                  aria-hidden="true"
+                />
                 <span>Log out</span>
               </DropdownItem>
             </Dropdown>
@@ -98,7 +107,7 @@ function Header() {
         </ul>
       </div>
     </header>
-  )
+  );
 }
 
-export default Header
+export default Header;
