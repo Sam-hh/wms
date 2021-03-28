@@ -35,6 +35,8 @@ import { ReactComponent as ParkingIcon } from "./parkingIcon.svg";
 import { ReactComponent as CarIcon } from "./carIcon.svg";
 import { ReactComponent as ClockIcon } from "./clockIcon.svg";
 import { ReactComponent as BinIcon } from "./binIcon.svg";
+import { ReactComponent as ProductIcon } from "./productIcon.svg";
+
 export {
   ButtonsIcon,
   CardsIcon,
@@ -73,4 +75,5 @@ export {
   CarIcon,
   ClockIcon,
   BinIcon,
+  ProductIcon,
 };

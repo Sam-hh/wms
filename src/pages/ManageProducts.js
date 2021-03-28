@@ -37,7 +37,7 @@ function manageUsers() {
 
   return (
     <>
-      <PageTitle>Manage Parked Vehicles</PageTitle>
+      <PageTitle>Manage Products</PageTitle>
       <div className="flex justify-center flex-1 mb-6">
         <div className="relative w-full max-w-xl focus-within:text-purple-500">
           <div className="absolute inset-y-0 flex items-center pl-2">
@@ -45,7 +45,7 @@ function manageUsers() {
           </div>
           <Input
             className="pl-8 text-gray-700"
-            placeholder="Search By vehicle name or number"
+            placeholder="Search By product name or ID"
             aria-label="Search"
           />
         </div>
@@ -56,8 +56,9 @@ function manageUsers() {
             <tr>
               <TableCell>Name/Id</TableCell>
               <TableCell>Actions</TableCell>
-              <TableCell>Vehicle Type</TableCell>
-              <TableCell>Parked At</TableCell>
+              <TableCell>Category</TableCell>
+              <TableCell>Supplier</TableCell>
+              <TableCell>Date Added</TableCell>
             </tr>
           </TableHeader>
           <TableBody>
@@ -66,9 +67,9 @@ function manageUsers() {
                 <TableCell>
                   <div className="flex items-center text-sm">
                     <div>
-                      <p className="font-semibold">{"Vehicle Name"}</p>
+                      <p className="font-semibold">{"Product Name"}</p>
                       <p className="text-xs text-gray-600 dark:text-gray-400">
-                        {"Vehicle Number"}
+                        {"Product ID"}
                       </p>
                     </div>
                   </div>
@@ -77,7 +78,7 @@ function manageUsers() {
                   <span className="text-sm mx-4">
                     <span className="has-tooltip">
                       <span className="tooltip rounded shadow-lg p-1 bg-gray-500 text-white -mt-8 -ml-10">
-                        Remove From Parking
+                        Remove All Products
                       </span>
                       <Button
                         icon={BinIcon}
@@ -90,6 +91,9 @@ function manageUsers() {
                 </TableCell>
                 <TableCell>
                   <Badge type={user.status}>{user.status}</Badge>
+                </TableCell>
+                <TableCell>
+                  <span className="text-sm">Supplier</span>
                 </TableCell>
                 <TableCell>
                   <span className="text-sm">

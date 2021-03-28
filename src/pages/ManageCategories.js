@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import PageTitle from "../components/Typography/PageTitle";
 import {
+  Label,
   TableBody,
   TableContainer,
   Table,
@@ -8,18 +8,17 @@ import {
   TableCell,
   TableRow,
   TableFooter,
-  Badge,
   Pagination,
   Button,
-  Input,
 } from "@windmill/react-ui";
+import PageTitle from "../components/Typography/PageTitle";
 import response from "../utils/demo/tableData";
-import { BinIcon, SearchIcon } from "../icons";
+import { BinIcon } from "../icons";
+import SectionTitle from "../components/Typography/SectionTitle";
 
-function manageUsers() {
+function addUser() {
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
-
   // pagination setup
   const resultsPerPage = 10;
   const totalResults = response.length;
@@ -37,27 +36,33 @@ function manageUsers() {
 
   return (
     <>
-      <PageTitle>Manage Parked Vehicles</PageTitle>
-      <div className="flex justify-center flex-1 mb-6">
-        <div className="relative w-full max-w-xl focus-within:text-purple-500">
-          <div className="absolute inset-y-0 flex items-center pl-2">
-            <SearchIcon className="w-4 h-4" aria-hidden="true" />
-          </div>
-          <Input
-            className="pl-8 text-gray-700"
-            placeholder="Search By vehicle name or number"
-            aria-label="Search"
-          />
+      <PageTitle>Manage Categories</PageTitle>
+      <SectionTitle>Add Category</SectionTitle>
+      <div className="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+        <div className="mt-4">
+          <Label>
+            <span>Category Name</span>
+            <div className="relative text-gray-500 focus-within:text-purple-600">
+              <input
+                className="block w-full pr-20 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                placeholder="Shoes"
+              />
+              <button className="absolute inset-y-0 right-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                Add Category
+              </button>
+            </div>
+          </Label>
         </div>
       </div>
+      <SectionTitle>Manage Category</SectionTitle>
       <TableContainer>
         <Table>
           <TableHeader>
             <tr>
-              <TableCell>Name/Id</TableCell>
+              <TableCell>Name</TableCell>
               <TableCell>Actions</TableCell>
-              <TableCell>Vehicle Type</TableCell>
-              <TableCell>Parked At</TableCell>
+              <TableCell>No Of Products</TableCell>
+              <TableCell>Added</TableCell>
             </tr>
           </TableHeader>
           <TableBody>
@@ -66,10 +71,7 @@ function manageUsers() {
                 <TableCell>
                   <div className="flex items-center text-sm">
                     <div>
-                      <p className="font-semibold">{"Vehicle Name"}</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">
-                        {"Vehicle Number"}
-                      </p>
+                      <p className="font-semibold">{"Category Name"}</p>
                     </div>
                   </div>
                 </TableCell>
@@ -89,7 +91,7 @@ function manageUsers() {
                   </span>
                 </TableCell>
                 <TableCell>
-                  <Badge type={user.status}>{user.status}</Badge>
+                  <span className="mx-10">50</span>
                 </TableCell>
                 <TableCell>
                   <span className="text-sm">
@@ -113,4 +115,4 @@ function manageUsers() {
   );
 }
 
-export default manageUsers;
+export default addUser;

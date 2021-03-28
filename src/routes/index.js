@@ -18,6 +18,10 @@ const PMSSettings = lazy(() => import("../pages/PMSSettings"));
 const Tickets = lazy(() => import("../pages/Tickets"));
 const SalesList = lazy(() => import("../pages/SalesList"));
 const SaleStatistics = lazy(() => import("../pages/SalesStatistic"));
+const ManageCategories = lazy(() => import("../pages/ManageCategories"));
+const AddProducts = lazy(() => import("../pages/AddProducts"));
+const ManageSuppliers = lazy(() => import("../pages/ManageSuppliers"));
+const ManageProducts = lazy(() => import("../pages/ManageProducts"));
 
 /**
  * ⚠ These are internal routes!
@@ -97,6 +101,22 @@ const routes = [
   {
     path: "/tickets",
     component: Tickets,
+  },
+  {
+    path: "/manage-categories",
+    component: ManageCategories,
+  },
+  {
+    path: "/add-products",
+    component: AddProducts,
+  },
+  {
+    path: "/manage-suppliers",
+    component: ManageSuppliers,
+  },
+  {
+    path: "/manage-products",
+    component: ManageProducts,
   },
 ];
 

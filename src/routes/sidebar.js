@@ -77,24 +77,37 @@ const routes = [
       name: "Dashboard", // name that appear in Sidebar
     },
     {
-      path: "/app/forms",
-      icon: "FormsIcon",
+      icon: "CartIcon",
       name: "Shop",
+      routes: [
+        {
+          path: "/app/forms",
+          name: "Add Purchase",
+        },
+        {
+          path: "/app/forms",
+          name: "Issue Refund",
+        },
+      ],
     },
     {
       icon: "CardsIcon",
       routes: [
         // submenu
         {
-          path: "/app/cards",
+          path: "/app/manage-categories",
           name: "Manage Categories",
         },
         {
-          path: "/app/cards",
+          path: "/app/manage-suppliers",
+          name: "Manage Suppliers",
+        },
+        {
+          path: "/app/add-products",
           name: "Add Products",
         },
         {
-          path: "/app/cards",
+          path: "/app/manage-products",
           name: "Manage Products",
         },
       ],
