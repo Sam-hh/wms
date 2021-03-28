@@ -22,6 +22,8 @@ const ManageCategories = lazy(() => import("../pages/ManageCategories"));
 const AddProducts = lazy(() => import("../pages/AddProducts"));
 const ManageSuppliers = lazy(() => import("../pages/ManageSuppliers"));
 const ManageProducts = lazy(() => import("../pages/ManageProducts"));
+const Refunds = lazy(() => import("../pages/Refunds"));
+const AddPurchase = lazy(() => import("../pages/AddPurchase"));
 
 /**
  * ⚠ These are internal routes!
@@ -117,6 +119,14 @@ const routes = [
   {
     path: "/manage-products",
     component: ManageProducts,
+  },
+  {
+    path: "/refunds",
+    component: Refunds,
+  },
+  {
+    path: "/add-purchase",
+    component: AddPurchase,
   },
 ];
 

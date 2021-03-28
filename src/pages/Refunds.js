@@ -16,7 +16,7 @@ import response from "../utils/demo/tableData";
 import { BinIcon } from "../icons";
 import SectionTitle from "../components/Typography/SectionTitle";
 
-function ManageCategories() {
+function Refunds() {
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
   // pagination setup
@@ -37,32 +37,33 @@ function ManageCategories() {
   return (
     <>
       <PageTitle>Manage Categories</PageTitle>
-      <SectionTitle>Add Category</SectionTitle>
+      <SectionTitle>Issue Refunds</SectionTitle>
       <div className="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
         <div className="mt-4">
           <Label>
-            <span>Category Name</span>
+            <span>Purchase ID</span>
             <div className="relative text-gray-500 focus-within:text-purple-600">
               <input
                 className="block w-full pr-20 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                placeholder="Shoes"
+                placeholder="ID"
               />
               <button className="absolute inset-y-0 right-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                Add Category
+                Open New Ticket
               </button>
             </div>
           </Label>
         </div>
       </div>
-      <SectionTitle>Manage Category</SectionTitle>
+      <SectionTitle>Recently Issued Refunds</SectionTitle>
       <TableContainer>
         <Table>
           <TableHeader>
             <tr>
-              <TableCell>Name</TableCell>
-              <TableCell>Actions</TableCell>
-              <TableCell>No Of Products</TableCell>
-              <TableCell>Added</TableCell>
+              <TableCell>Product Name/ID</TableCell>
+              <TableCell>Amount</TableCell>
+              <TableCell>Quantity</TableCell>
+              <TableCell>Purchased At</TableCell>
+              <TableCell>Refunded At</TableCell>
             </tr>
           </TableHeader>
           <TableBody>
@@ -71,7 +72,10 @@ function ManageCategories() {
                 <TableCell>
                   <div className="flex items-center text-sm">
                     <div>
-                      <p className="font-semibold">{"Category Name"}</p>
+                      <p className="font-semibold">{"Product Name"}</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
+                        {"Product ID"}
+                      </p>
                     </div>
                   </div>
                 </TableCell>
@@ -91,7 +95,12 @@ function ManageCategories() {
                   </span>
                 </TableCell>
                 <TableCell>
-                  <span className="mx-10">50</span>
+                  <span className="mx-4">50</span>
+                </TableCell>
+                <TableCell>
+                  <span className="text-sm">
+                    {new Date(user.date).toLocaleDateString()}
+                  </span>
                 </TableCell>
                 <TableCell>
                   <span className="text-sm">
@@ -115,4 +124,4 @@ function ManageCategories() {
   );
 }
 
-export default ManageCategories;
+export default Refunds;

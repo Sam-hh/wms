@@ -81,12 +81,12 @@ const routes = [
       name: "Shop",
       routes: [
         {
-          path: "/app/forms",
+          path: "/app/add-purchase",
           name: "Add Purchase",
         },
         {
-          path: "/app/forms",
-          name: "Issue Refund",
+          path: "/app/refunds",
+          name: "Refunds",
         },
       ],
     },

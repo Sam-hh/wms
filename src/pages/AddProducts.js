@@ -80,7 +80,7 @@ function addUser() {
 
         <div className="mt-4">
           <Label>
-            <span>Number Of Products in Stock</span>
+            <span>Price</span>
             <div className="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">
               <input
                 type="number"
