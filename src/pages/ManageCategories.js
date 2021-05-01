@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import Axios from "axios";
+import React, { useState, useEffect, useRef } from 'react';
+import Axios from 'axios';
 import {
   Label,
   TableBody,
@@ -11,10 +11,11 @@ import {
   TableFooter,
   Pagination,
   Button,
-} from "@windmill/react-ui";
-import PageTitle from "../components/Typography/PageTitle";
-import { BinIcon } from "../icons";
-import SectionTitle from "../components/Typography/SectionTitle";
+  HelperText,
+} from '@windmill/react-ui';
+import PageTitle from '../components/Typography/PageTitle';
+import { BinIcon } from '../icons';
+import SectionTitle from '../components/Typography/SectionTitle';
 
 function ManageCategories() {
   const [page, setPage] = useState(1);
@@ -24,7 +25,7 @@ function ManageCategories() {
   const resultsPerPage = 10;
   const [totalResults, setTotalResults] = useState(20);
   const [showAlert, setShowAlert] = useState(false);
-  const [alertcategory, setAlertCategory] = useState("");
+  const [alertcategory, setAlertCategory] = useState(true);
 
   // pagination change control
   function onPageChange(p) {
@@ -35,9 +36,8 @@ function ManageCategories() {
   // here you would make another server request for new data
   useEffect(() => {
     (async () => {
-      const categories = await Axios.get("/products/categories");
+      const categories = await Axios.get('/products/categories');
       setResponse(categories.data);
-      console.log(categories.data.length);
       setTotalResults(categories.data.length);
       setData(
         categories.data.slice(
@@ -63,23 +63,32 @@ function ManageCategories() {
                 placeholder="Shoes"
               />
               <button
+                className="absolute inset-y-0 right-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                 onClick={async () => {
-                  const category = await Axios.post("/products/category", {
+                  const category = await Axios.post('/products/category', {
                     name: InputRef.current.value,
-                  });
+                  }).catch(console.error);
                   setShowAlert(true);
-                  if (category.status < 400) {
+                  if (category) {
                     if (data.length < 10) data.push(category.data);
                     setResponse((categories) => [...categories, category.data]);
                     setTotalResults((prevCount) => prevCount + 1);
-                  }
+                    setAlertCategory(true);
+                    InputRef.current.value = '';
+                  } else setAlertCategory(false);
                 }}
-                className="absolute inset-y-0 right-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
               >
                 Add Category
               </button>
             </div>
           </Label>
+          {showAlert && (
+            <HelperText valid={alertcategory} invalid={!alertcategory}>
+              {alertcategory
+                ? 'Category created'
+                : 'Failed to create the category'}
+            </HelperText>
+          )}
         </div>
       </div>
       <SectionTitle>Manage Category</SectionTitle>
@@ -94,40 +103,65 @@ function ManageCategories() {
             </tr>
           </TableHeader>
           <TableBody>
-            {data.map((category) => (
-              <TableRow key={category.id}>
-                <TableCell>
-                  <div className="flex items-center text-sm">
-                    <div>
-                      <p className="font-semibold">{category.name}</p>
-                    </div>
-                  </div>
-                </TableCell>
-                <TableCell className="pl-2">
-                  <span className="text-sm mx-4">
-                    <span className="has-tooltip">
-                      <span className="tooltip rounded shadow-lg p-1 bg-gray-500 text-white -mt-8 -ml-12">
-                        Remove Category
+            {data.map(
+              (category) =>
+                category && (
+                  <TableRow key={category._id}>
+                    <TableCell>
+                      <div className="flex items-center text-sm">
+                        <div>
+                          <p className="font-semibold">{category.name}</p>
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell className="pl-2">
+                      <span className="text-sm mx-4">
+                        <span className="has-tooltip">
+                          <span className="tooltip rounded shadow-lg p-1 bg-gray-500 text-white -mt-8 -ml-12">
+                            Remove Category
+                          </span>
+                          <Button
+                            icon={BinIcon}
+                            onClick={async () => {
+                              const deletedCategory = await Axios.delete(
+                                `/products/category/${category._id}`
+                              ).catch(console.error);
+                              if (deletedCategory) {
+                                data.splice(
+                                  data.findIndex((c) => c._id == category._id),
+                                  1,
+                                  response[
+                                    response.findIndex(
+                                      (c) => c._id == category._id
+                                    ) + 1
+                                  ]
+                                );
+                                response.splice(
+                                  response.findIndex(
+                                    (c) => c._id == category._id
+                                  ),
+                                  1
+                                );
+                                setTotalResults((prevCount) => prevCount - 1);
+                              }
+                            }}
+                            layout="link"
+                            aria-label="Like"
+                          />
+                        </span>
                       </span>
-                      <Button
-                        icon={BinIcon}
-                        onClick={() => setIsModalOpen(true)}
-                        layout="link"
-                        aria-label="Like"
-                      />
-                    </span>
-                  </span>
-                </TableCell>
-                <TableCell>
-                  <span className="mx-10">{category.products}</span>
-                </TableCell>
-                <TableCell>
-                  <span className="text-sm">
-                    {new Date(category.dateAdded).toLocaleDateString()}
-                  </span>
-                </TableCell>
-              </TableRow>
-            ))}
+                    </TableCell>
+                    <TableCell>
+                      <span className="mx-10">{category.products}</span>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-sm">
+                        {new Date(category.dateAdded).toLocaleDateString()}
+                      </span>
+                    </TableCell>
+                  </TableRow>
+                )
+            )}
           </TableBody>
         </Table>
         <TableFooter>
