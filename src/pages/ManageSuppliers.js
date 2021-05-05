@@ -38,7 +38,6 @@ function addUser() {
   useEffect(() => {
     (async () => {
       const suppliers = await Axios.get('/products/suppliers');
-      console.log(suppliers);
       setResponse(suppliers.data);
       setTotalResults(suppliers.data.length);
       setData(
