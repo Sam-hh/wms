@@ -22,12 +22,10 @@ const BadgeTypes = ['primary', 'neutral', 'success', 'danger', 'warning'];
 function manageUsers() {
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   // pagination setup
   const [response, setResponse] = useState([]);
   const resultsPerPage = 10;
   const [totalResults, setTotalResults] = useState(20);
-  const [modalStatus, setModalStatus] = useState({});
 
   // pagination change control
   function onPageChange(p) {
