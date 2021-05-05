@@ -119,7 +119,7 @@ function addUser() {
           <Button
             onClick={async () => {
               const product = {
-                name: document.querySelector('#name').value,
+                name: document.querySelector('#name').value.trim(),
                 supplier: document.querySelector('#supplier').value,
                 category: document.querySelector('#category').value,
                 price: document.querySelector('#price').value,

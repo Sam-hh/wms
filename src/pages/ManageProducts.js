@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import PageTitle from "../components/Typography/PageTitle";
+import React, { useState, useEffect } from 'react';
+import PageTitle from '../components/Typography/PageTitle';
 import {
   TableBody,
   TableContainer,
@@ -12,27 +12,56 @@ import {
   Pagination,
   Button,
   Input,
-} from "@windmill/react-ui";
-import response from "../utils/demo/tableData";
-import { BinIcon, SearchIcon } from "../icons";
+} from '@windmill/react-ui';
+import response from '../utils/demo/tableData';
+import { BinIcon, SearchIcon } from '../icons';
+import axios from 'axios';
+
+const BadgeTypes = ['primary', 'neutral', 'success', 'danger', 'warning'];
 
 function manageUsers() {
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   // pagination setup
+  const [response, setResponse] = useState([]);
   const resultsPerPage = 10;
-  const totalResults = response.length;
+  const [totalResults, setTotalResults] = useState(20);
+  const [modalStatus, setModalStatus] = useState({});
 
   // pagination change control
   function onPageChange(p) {
     setPage(p);
   }
 
+  const searchProduct = () => {
+    return (e) => {
+      const searchPhrase = e.target.value;
+      if (searchPhrase == '') setData(orignalList);
+      else {
+        const matched = response.filter((e) => {
+          if (e.name.includes(searchPhrase) || e._id.includes(searchPhrase))
+            return e;
+        });
+        setData(
+          matched.slice((page - 1) * resultsPerPage, page * resultsPerPage)
+        );
+      }
+    };
+  };
+
   // on page change, load new sliced data
   // here you would make another server request for new data
   useEffect(() => {
-    setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage));
+    (async () => {
+      const suppliers = await axios.get('/products/');
+      console.log(suppliers);
+      setResponse(suppliers.data);
+      setTotalResults(suppliers.data.length);
+      setData(
+        suppliers.data.slice((page - 1) * resultsPerPage, page * resultsPerPage)
+      );
+    })();
   }, [page]);
 
   return (
@@ -44,6 +73,7 @@ function manageUsers() {
             <SearchIcon className="w-4 h-4" aria-hidden="true" />
           </div>
           <Input
+            onChange={searchProduct()}
             className="pl-8 text-gray-700"
             placeholder="Search By product name or ID"
             aria-label="Search"
@@ -62,14 +92,14 @@ function manageUsers() {
             </tr>
           </TableHeader>
           <TableBody>
-            {data.map((user, i) => (
-              <TableRow key={i}>
+            {data.map((product) => (
+              <TableRow key={product._id}>
                 <TableCell>
                   <div className="flex items-center text-sm">
                     <div>
-                      <p className="font-semibold">{"Product Name"}</p>
+                      <p className="font-semibold">{product.name}</p>
                       <p className="text-xs text-gray-600 dark:text-gray-400">
-                        {"Product ID"}
+                        {product._id}
                       </p>
                     </div>
                   </div>
@@ -90,14 +120,20 @@ function manageUsers() {
                   </span>
                 </TableCell>
                 <TableCell>
-                  <Badge type={user.status}>{user.status}</Badge>
+                  <Badge
+                    type={
+                      BadgeTypes[Math.floor(Math.random() * BadgeTypes.length)]
+                    }
+                  >
+                    {product.category.name}
+                  </Badge>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm">Supplier</span>
+                  <span className="text-sm">{product.supplier.name}</span>
                 </TableCell>
                 <TableCell>
                   <span className="text-sm">
-                    {new Date(user.date).toLocaleDateString()}
+                    {new Date(product.dateAdded).toLocaleDateString()}
                   </span>
                 </TableCell>
               </TableRow>
