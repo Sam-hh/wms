@@ -1,7 +1,8 @@
-import React from "react";
-import { Input, Label, Button } from "@windmill/react-ui";
-import PageTitle from "../components/Typography/PageTitle";
-import { LockIcon, MailIcon, PhoneIcon, UserIcon } from "../icons";
+import React from 'react';
+import Axios from 'axios';
+import { Input, Label, Button } from '@windmill/react-ui';
+import PageTitle from '../components/Typography/PageTitle';
+import { LockIcon, MailIcon, PhoneIcon, UserIcon } from '../icons';
 
 function addUser() {
   return (
@@ -15,6 +16,7 @@ function addUser() {
               <input
                 className="block w-full pl-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                 placeholder="Jhon Doe"
+                id="name"
               />
               <div className="absolute inset-y-0 flex items-center ml-3 pointer-events-none">
                 <UserIcon className="w-5 h-5" aria-hidden="true" />
@@ -31,6 +33,7 @@ function addUser() {
                 type="email"
                 className="block w-full pl-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                 placeholder="user@wms.com"
+                id="email"
               />
               <div className="absolute inset-y-0 flex items-center ml-3 pointer-events-none">
                 <MailIcon className="w-5 h-5" aria-hidden="true" />
@@ -46,7 +49,8 @@ function addUser() {
               <input
                 type="tel"
                 className="block w-full pl-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                placeholder="Jhon Doe"
+                placeholder="+91...."
+                id="phone"
               />
               <div className="absolute inset-y-0 flex items-center ml-3 pointer-events-none">
                 <PhoneIcon className="w-6 h-6" aria-hidden="true" />
@@ -59,11 +63,11 @@ function addUser() {
           <Label>Account Type</Label>
           <div className="mt-2">
             <Label radio>
-              <Input type="radio" value="personal" name="accountType" />
+              <Input defaultChecked type="radio" value="e" name="accountType" />
               <span className="ml-2">Employee</span>
             </Label>
             <Label className="ml-6" radio>
-              <Input type="radio" value="business" name="accountType" />
+              <Input type="radio" value="c" name="accountType" />
               <span className="ml-2">Customer</span>
             </Label>
           </div>
@@ -77,6 +81,7 @@ function addUser() {
                 type="password"
                 className="password block w-full pl-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                 placeholder="***********"
+                id="password"
               />
               <div className="absolute inset-y-0 flex items-center ml-3 pointer-events-none">
                 <LockIcon className="w-4 h-4" aria-hidden="true" />
@@ -88,23 +93,50 @@ function addUser() {
           <Label className="mt-6" check>
             <Input
               type="checkbox"
+              id="generate-password"
               onClick={(e) => {
-                document.querySelector(".password").disabled = e.target.checked
+                document.querySelector('.password').disabled = e.target.checked
                   ? true
                   : false;
+                document.querySelectorAll(
+                  "input[type='checkbox']"
+                )[1].checked = e.target.checked ? true : false;
               }}
             />
             <span className="ml-2">Auto Generate Password</span>
           </Label>
         </div>
         <Label className="mt-6" check>
-          <Input type="checkbox" />
+          <Input type="checkbox" disabled />
           <span className="ml-2">
             Ask This User To Change Password On First Login
           </span>
         </Label>
         <div className="px-6 my-6">
-          <Button>
+          <Button
+            onClick={async () => {
+              let password = !document.querySelector('#generate-password')
+                .checked
+                ? document.querySelector('#password').value
+                : Math.random().toString(36).substring(2, 12);
+              const User = {
+                password,
+                name: document.querySelector('#name').value,
+                email: document.querySelector('#email').value,
+                phone: document.querySelector('#phone').value,
+                accountType: document.querySelector(
+                  "input[name='accountType']:checked"
+                ).value,
+                changePasswordOnLogin: document.querySelector(
+                  '#generate-password'
+                ).checked,
+              };
+              const userInfo = await Axios.post('/users', User).catch(
+                console.error
+              );
+              if (userInfo) console.log(userInfo);
+            }}
+          >
             Create account
             <span className="ml-2" aria-hidden="true">
               +
