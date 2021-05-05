@@ -1,10 +1,18 @@
-import React from "react";
-import { Input, Label, Button, Select, Textarea } from "@windmill/react-ui";
-import PageTitle from "../components/Typography/PageTitle";
-import { MailIcon, PhoneIcon, UserIcon, ProductIcon } from "../icons";
-import SectionTitle from "../components/Typography/SectionTitle";
+import React, { useState, useEffect } from 'react';
+import { Input, Label, Button, Select, Textarea } from '@windmill/react-ui';
+import PageTitle from '../components/Typography/PageTitle';
+import { MailIcon, PhoneIcon, UserIcon, ProductIcon } from '../icons';
+import SectionTitle from '../components/Typography/SectionTitle';
+import axios from 'axios';
 
 function AddPurchase() {
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    (async () => {
+      const categories = await axios.get('/products/categories');
+      setCategories(categories);
+    })();
+  }, []);
   return (
     <>
       <PageTitle>Add purchase</PageTitle>
