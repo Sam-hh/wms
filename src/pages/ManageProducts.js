@@ -55,7 +55,6 @@ function manageUsers() {
   useEffect(() => {
     (async () => {
       const suppliers = await axios.get('/products/');
-      console.log(suppliers);
       setResponse(suppliers.data);
       setTotalResults(suppliers.data.length);
       setData(
@@ -92,52 +91,79 @@ function manageUsers() {
             </tr>
           </TableHeader>
           <TableBody>
-            {data.map((product) => (
-              <TableRow key={product._id}>
-                <TableCell>
-                  <div className="flex items-center text-sm">
-                    <div>
-                      <p className="font-semibold">{product.name}</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">
-                        {product._id}
-                      </p>
-                    </div>
-                  </div>
-                </TableCell>
-                <TableCell className="pl-2">
-                  <span className="text-sm mx-4">
-                    <span className="has-tooltip">
-                      <span className="tooltip rounded shadow-lg p-1 bg-gray-500 text-white -mt-8 -ml-10">
-                        Remove All Products
+            {data.map(
+              (product) =>
+                product && (
+                  <TableRow key={product._id}>
+                    <TableCell>
+                      <div className="flex items-center text-sm">
+                        <div>
+                          <p className="font-semibold">{product.name}</p>
+                          <p className="text-xs text-gray-600 dark:text-gray-400">
+                            {product._id}
+                          </p>
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell className="pl-2">
+                      <span className="text-sm mx-4">
+                        <span className="has-tooltip">
+                          <span className="tooltip rounded shadow-lg p-1 bg-gray-500 text-white -mt-8 -ml-10">
+                            Remove All Products
+                          </span>
+                          <Button
+                            icon={BinIcon}
+                            onClick={async () => {
+                              const deletedProduct = await axios
+                                .delete(`/products/remove/${product._id}`)
+                                .catch(console.error);
+                              if (deletedProduct) {
+                                data.splice(
+                                  data.findIndex((c) => c._id == product._id),
+                                  1,
+                                  response[
+                                    response.findIndex(
+                                      (c) => c._id == product._id
+                                    ) + 1
+                                  ]
+                                );
+                                response.splice(
+                                  response.findIndex(
+                                    (c) => c._id == product._id
+                                  ),
+                                  1
+                                );
+                                setTotalResults((prevCount) => prevCount - 1);
+                              }
+                            }}
+                            layout="link"
+                            aria-label="Link"
+                          />
+                        </span>
                       </span>
-                      <Button
-                        icon={BinIcon}
-                        onClick={() => setIsModalOpen(true)}
-                        layout="link"
-                        aria-label="Like"
-                      />
-                    </span>
-                  </span>
-                </TableCell>
-                <TableCell>
-                  <Badge
-                    type={
-                      BadgeTypes[Math.floor(Math.random() * BadgeTypes.length)]
-                    }
-                  >
-                    {product.category.name}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <span className="text-sm">{product.supplier.name}</span>
-                </TableCell>
-                <TableCell>
-                  <span className="text-sm">
-                    {new Date(product.dateAdded).toLocaleDateString()}
-                  </span>
-                </TableCell>
-              </TableRow>
-            ))}
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        type={
+                          BadgeTypes[
+                            Math.floor(Math.random() * BadgeTypes.length)
+                          ]
+                        }
+                      >
+                        {product.category.name}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-sm">{product.supplier.name}</span>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-sm">
+                        {new Date(product.dateAdded).toLocaleDateString()}
+                      </span>
+                    </TableCell>
+                  </TableRow>
+                )
+            )}
           </TableBody>
         </Table>
         <TableFooter>
