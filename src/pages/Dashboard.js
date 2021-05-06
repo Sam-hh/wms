@@ -1,20 +1,41 @@
-import React from "react";
-import { Label, Button, Textarea } from "@windmill/react-ui";
+import React, { useEffect, useState } from 'react';
+import {
+  Label,
+  Button,
+  Textarea,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from '@windmill/react-ui';
 
-import InfoCard from "../components/Cards/InfoCard";
-import PageTitle from "../components/Typography/PageTitle";
-import SectionTitle from "../components/Typography/SectionTitle";
-import { ChatIcon, CartIcon, MoneyIcon, PeopleIcon, MailIcon } from "../icons";
-import RoundIcon from "../components/RoundIcon";
+import InfoCard from '../components/Cards/InfoCard';
+import PageTitle from '../components/Typography/PageTitle';
+import SectionTitle from '../components/Typography/SectionTitle';
+import { ChatIcon, CartIcon, MoneyIcon, PeopleIcon, MailIcon } from '../icons';
+import RoundIcon from '../components/RoundIcon';
+import axios from 'axios';
 
 function Dashboard() {
+  const [data, setData] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalStatus, setModalStatus] = useState({});
+
+  useEffect(() => {
+    (async () => {
+      const dashboard = await axios
+        .get(`/dashboard`)
+        .catch((err) => console.log(err.response));
+      setData(dashboard.data);
+    })();
+  }, []);
   return (
     <>
       <PageTitle>Dashboard</PageTitle>
 
       {/* <!-- Cards --> */}
       <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
-        <InfoCard title="Total Customers" value="6389">
+        <InfoCard title="Total Customers" value={data.customers || 0}>
           <RoundIcon
             icon={PeopleIcon}
             iconColorClass="text-orange-500 dark:text-orange-100"
@@ -23,7 +44,7 @@ function Dashboard() {
           />
         </InfoCard>
 
-        <InfoCard title="Sales Value Today" value="$ 46,760.89">
+        <InfoCard title="Sales Value Today" value={`$ ${data.sales || 0}`}>
           <RoundIcon
             icon={MoneyIcon}
             iconColorClass="text-green-500 dark:text-green-100"
@@ -32,7 +53,7 @@ function Dashboard() {
           />
         </InfoCard>
 
-        <InfoCard title="New Products" value="376">
+        <InfoCard title="New Products" value={data.products || 0}>
           <RoundIcon
             icon={CartIcon}
             iconColorClass="text-blue-500 dark:text-blue-100"
@@ -41,7 +62,7 @@ function Dashboard() {
           />
         </InfoCard>
 
-        <InfoCard title="Unresolved Tickets" value="35">
+        <InfoCard title="Notifications" value={data.notifications || 0}>
           <RoundIcon
             icon={ChatIcon}
             iconColorClass="text-teal-500 dark:text-teal-100"
@@ -57,6 +78,7 @@ function Dashboard() {
             <span>Notification Title</span>
             <div className="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">
               <input
+                id="title"
                 className="block w-full pl-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                 placeholder="Jhon Doe"
               />
@@ -72,6 +94,7 @@ function Dashboard() {
               Description
             </label>
             <Textarea
+              id="description"
               className="mt-1"
               rows="3"
               placeholder="An Optional Description."
@@ -79,9 +102,45 @@ function Dashboard() {
           </div>
         </div>
         <div className="px-6 my-6">
-          <Button>Create Notification</Button>
+          <Button
+            onClick={async () => {
+              const notification = {
+                title: document.querySelector('#title').value,
+                description: document.querySelector('#description').value,
+              };
+              const newNotification = await axios
+                .post('/dashboard/notification', notification)
+                .catch(console.error);
+              if (newNotification) {
+                setModalStatus({
+                  header: 'Notification added',
+                  body: 'Notification Sent to all users',
+                });
+              } else {
+                setModalStatus({
+                  header: 'Cannot add notifcation',
+                  body: 'Check the entry fields',
+                });
+              }
+              setIsModalOpen(true);
+            }}
+          >
+            Create Notification
+          </Button>
         </div>
       </div>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <ModalHeader>{modalStatus.header}</ModalHeader>
+        <ModalBody>{modalStatus.body}</ModalBody>
+        <ModalFooter>
+          <Button
+            onClick={() => setIsModalOpen(false)}
+            className="w-full sm:w-auto"
+          >
+            Proceed
+          </Button>
+        </ModalFooter>
+      </Modal>
     </>
   );
 }
