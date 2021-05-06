@@ -1,29 +1,29 @@
-import { lazy } from "react";
+import { lazy } from 'react';
 
 // use lazy for better code splitting, a.k.a. load faster
-const Dashboard = lazy(() => import("../pages/Dashboard"));
-const Forms = lazy(() => import("../pages/Forms"));
-const Cards = lazy(() => import("../pages/Cards"));
-const Charts = lazy(() => import("../pages/Charts"));
-const Buttons = lazy(() => import("../pages/Buttons"));
-const Modals = lazy(() => import("../pages/Modals"));
-const Tables = lazy(() => import("../pages/Tables"));
-const Page404 = lazy(() => import("../pages/404"));
-const Blank = lazy(() => import("../pages/Blank"));
-const manageUsers = lazy(() => import("../pages/manageUsers"));
-const addUser = lazy(() => import("../pages/addUser"));
-const addParking = lazy(() => import("../pages/AddParking"));
-const ParkedVehicles = lazy(() => import("../pages/ParkedVehicles"));
-const PMSSettings = lazy(() => import("../pages/PMSSettings"));
-const Tickets = lazy(() => import("../pages/Tickets"));
-const SalesList = lazy(() => import("../pages/SalesList"));
-const SaleStatistics = lazy(() => import("../pages/SalesStatistic"));
-const ManageCategories = lazy(() => import("../pages/ManageCategories"));
-const AddProducts = lazy(() => import("../pages/AddProducts"));
-const ManageSuppliers = lazy(() => import("../pages/ManageSuppliers"));
-const ManageProducts = lazy(() => import("../pages/ManageProducts"));
-const Refunds = lazy(() => import("../pages/Refunds"));
-const AddPurchase = lazy(() => import("../pages/AddPurchase"));
+const Dashboard = lazy(() => import('../pages/Dashboard'));
+const Forms = lazy(() => import('../pages/Forms'));
+const Cards = lazy(() => import('../pages/Cards'));
+const Charts = lazy(() => import('../pages/Charts'));
+const Buttons = lazy(() => import('../pages/Buttons'));
+const Modals = lazy(() => import('../pages/Modals'));
+const Tables = lazy(() => import('../pages/Tables'));
+const Page404 = lazy(() => import('../pages/404'));
+const Blank = lazy(() => import('../pages/Blank'));
+const manageUsers = lazy(() => import('../pages/manageUsers'));
+const addUser = lazy(() => import('../pages/addUser'));
+const addParking = lazy(() => import('../pages/AddParking'));
+const ParkedVehicles = lazy(() => import('../pages/ParkedVehicles'));
+const PMSSettings = lazy(() => import('../pages/PMSSettings'));
+const Tickets = lazy(() => import('../pages/Tickets'));
+const SalesList = lazy(() => import('../pages/SalesList'));
+const SaleStatistics = lazy(() => import('../pages/SalesStatistic'));
+const ManageCategories = lazy(() => import('../pages/ManageCategories'));
+const AddProducts = lazy(() => import('../pages/AddProducts'));
+const ManageSuppliers = lazy(() => import('../pages/ManageSuppliers'));
+const ManageProducts = lazy(() => import('../pages/ManageProducts'));
+const Refunds = lazy(() => import('../pages/Refunds'));
+const AddPurchase = lazy(() => import('../pages/AddPurchase'));
 
 /**
  * ⚠ These are internal routes!
@@ -37,95 +37,91 @@ const AddPurchase = lazy(() => import("../pages/AddPurchase"));
  */
 const routes = [
   {
-    path: "/dashboard", // the url
+    path: '/dashboard', // the url
     component: Dashboard, // view rendered
   },
   {
-    path: "/forms",
+    path: '/forms',
     component: Forms,
   },
   {
-    path: "/cards",
+    path: '/cards',
     component: Cards,
   },
   {
-    path: "/charts",
+    path: '/charts',
     component: Charts,
   },
   {
-    path: "/buttons",
+    path: '/buttons',
     component: Buttons,
   },
   {
-    path: "/modals",
+    path: '/modals',
     component: Modals,
   },
   {
-    path: "/tables",
+    path: '/tables',
     component: Tables,
   },
   {
-    path: "/404",
+    path: '/404',
     component: Page404,
   },
   {
-    path: "/blank",
+    path: '/blank',
     component: Blank,
   },
   {
-    path: "/manage-users",
+    path: '/manage-users',
     component: manageUsers,
   },
   {
-    path: "/add-user",
+    path: '/add-user',
     component: addUser,
   },
   {
-    path: "/add-parking",
+    path: '/add-parking',
     component: addParking,
   },
   {
-    path: "/parked-vehicles",
+    path: '/parked-vehicles',
     component: ParkedVehicles,
   },
   {
-    path: "/pms-settings",
+    path: '/pms-settings',
     component: PMSSettings,
   },
   {
-    path: "/sales-statistics",
+    path: '/sales-statistics',
     component: SaleStatistics,
   },
   {
-    path: "/sales-list",
+    path: '/sales-list',
     component: SalesList,
   },
   {
-    path: "/tickets",
-    component: Tickets,
-  },
-  {
-    path: "/manage-categories",
+    path: '/manage-categories',
     component: ManageCategories,
   },
   {
-    path: "/add-products",
+    path: '/add-products',
     component: AddProducts,
   },
   {
-    path: "/manage-suppliers",
+    path: '/manage-suppliers',
     component: ManageSuppliers,
   },
   {
-    path: "/manage-products",
+    path: '/manage-products',
     component: ManageProducts,
   },
   {
-    path: "/refunds",
+    path: '/refunds',
     component: Refunds,
   },
   {
-    path: "/add-purchase",
+    path: '/add-purchase',
     component: AddPurchase,
   },
 ];

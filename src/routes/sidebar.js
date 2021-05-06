@@ -8,162 +8,157 @@
 const routes = [
   [
     {
-      path: "/app/dashboard", // the url
-      icon: "HomeIcon", // the component being exported from icons/index.js
-      name: "Dashboard", // name that appear in Sidebar
+      path: '/app/dashboard', // the url
+      icon: 'HomeIcon', // the component being exported from icons/index.js
+      name: 'Dashboard', // name that appear in Sidebar
     },
     {
-      path: "/app/forms",
-      icon: "FormsIcon",
-      name: "Forms",
+      path: '/app/forms',
+      icon: 'FormsIcon',
+      name: 'Forms',
     },
     {
-      path: "/app/cards",
-      icon: "CardsIcon",
-      name: "Cards",
+      path: '/app/cards',
+      icon: 'CardsIcon',
+      name: 'Cards',
     },
     {
-      path: "/app/charts",
-      icon: "ChartsIcon",
-      name: "Charts",
+      path: '/app/charts',
+      icon: 'ChartsIcon',
+      name: 'Charts',
     },
     {
-      path: "/app/buttons",
-      icon: "ButtonsIcon",
-      name: "Buttons",
+      path: '/app/buttons',
+      icon: 'ButtonsIcon',
+      name: 'Buttons',
     },
     {
-      path: "/app/modals",
-      icon: "ModalsIcon",
-      name: "Modals",
+      path: '/app/modals',
+      icon: 'ModalsIcon',
+      name: 'Modals',
     },
     {
-      path: "/app/tables",
-      icon: "TablesIcon",
-      name: "Tables",
+      path: '/app/tables',
+      icon: 'TablesIcon',
+      name: 'Tables',
     },
     {
-      icon: "PagesIcon",
-      name: "Pages",
+      icon: 'PagesIcon',
+      name: 'Pages',
       routes: [
         // submenu
         {
-          path: "/login",
-          name: "Login",
+          path: '/login',
+          name: 'Login',
         },
         {
-          path: "/create-account",
-          name: "Create account",
+          path: '/create-account',
+          name: 'Create account',
         },
         {
-          path: "/forgot-password",
-          name: "Forgot password",
+          path: '/forgot-password',
+          name: 'Forgot password',
         },
         {
-          path: "/app/404",
-          name: "404",
+          path: '/app/404',
+          name: '404',
         },
         {
-          path: "/app/blank",
-          name: "Blank",
+          path: '/app/blank',
+          name: 'Blank',
         },
       ],
     },
   ],
   [
     {
-      path: "/app/dashboard", // the url
-      icon: "HomeIcon", // the component being exported from icons/index.js
-      name: "Dashboard", // name that appear in Sidebar
+      path: '/app/dashboard', // the url
+      icon: 'HomeIcon', // the component being exported from icons/index.js
+      name: 'Dashboard', // name that appear in Sidebar
     },
     {
-      icon: "CartIcon",
-      name: "Shop",
+      icon: 'CartIcon',
+      name: 'Shop',
       routes: [
         {
-          path: "/app/add-purchase",
-          name: "Add Purchase",
+          path: '/app/add-purchase',
+          name: 'Add Purchase',
         },
         {
-          path: "/app/refunds",
-          name: "Refunds",
+          path: '/app/refunds',
+          name: 'Refunds',
         },
       ],
     },
     {
-      icon: "CardsIcon",
+      icon: 'CardsIcon',
       routes: [
         // submenu
         {
-          path: "/app/manage-categories",
-          name: "Manage Categories",
+          path: '/app/manage-categories',
+          name: 'Manage Categories',
         },
         {
-          path: "/app/manage-suppliers",
-          name: "Manage Suppliers",
+          path: '/app/manage-suppliers',
+          name: 'Manage Suppliers',
         },
         {
-          path: "/app/add-products",
-          name: "Add Products",
+          path: '/app/add-products',
+          name: 'Add Products',
         },
         {
-          path: "/app/manage-products",
-          name: "Manage Products",
+          path: '/app/manage-products',
+          name: 'Manage Products',
         },
       ],
-      name: "Products",
+      name: 'Products',
     },
     {
-      icon: "ChartsIcon",
-      name: "Sales",
+      icon: 'ChartsIcon',
+      name: 'Sales',
       routes: [
         // submenu
         {
-          path: "/app/sales-list",
-          name: "Sales Lists",
+          path: '/app/sales-list',
+          name: 'Sales Lists',
         },
         {
-          path: "/app/sales-statistics",
-          name: "Statistics",
-        },
-      ],
-    },
-    {
-      path: "/app/tickets",
-      icon: "ButtonsIcon",
-      name: "Tickets",
-    },
-    {
-      icon: "UserIcon",
-      name: "Users",
-      routes: [
-        // submenu
-        {
-          path: "/app/add-user",
-          name: "Add User",
-        },
-        {
-          path: "/app/manage-users",
-          name: "Manage Users",
+          path: '/app/sales-statistics',
+          name: 'Statistics',
         },
       ],
     },
     {
-      icon: "ParkingIcon",
-      name: "Parking Managemnt",
+      icon: 'UserIcon',
+      name: 'Users',
       routes: [
         // submenu
         {
-          path: "/app/add-parking",
-          name: "Add Parking",
+          path: '/app/add-user',
+          name: 'Add User',
         },
         {
-          path: "/app/parked-vehicles",
-          name: "Currently Parked",
+          path: '/app/manage-users',
+          name: 'Manage Users',
+        },
+      ],
+    },
+    {
+      icon: 'ParkingIcon',
+      name: 'Parking Managemnt',
+      routes: [
+        // submenu
+        {
+          path: '/app/add-parking',
+          name: 'Add Parking',
         },
         {
-          path: "/app/pms-settings",
-          name: "PMS Settings",
+          path: '/app/parked-vehicles',
+          name: 'Currently Parked',
+        },
+        {
+          path: '/app/pms-settings',
+          name: 'PMS Settings',
         },
       ],
     },
