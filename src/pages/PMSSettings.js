@@ -1,8 +1,16 @@
-import React from "react";
-import PageTitle from "../components/Typography/PageTitle";
-import SectionTitle from "../components/Typography/SectionTitle";
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import PageTitle from '../components/Typography/PageTitle';
+import SectionTitle from '../components/Typography/SectionTitle';
 
 function PMSSettings() {
+  const [pmsSettings, setPmsSetting] = useState({ allowParking: true });
+  useEffect(() => {
+    (async () => {
+      const { data } = await axios.get('/pms');
+      setPmsSetting(data);
+    })();
+  }, []);
   return (
     <>
       <PageTitle>Manage PMS</PageTitle>
@@ -19,11 +27,22 @@ function PMSSettings() {
               htmlFor="toogleA"
               className="flex items-center cursor-pointer"
               style={{
-                marginLeft: "85%",
+                marginLeft: '85%',
               }}
             >
               <div className="relative">
-                <input id="toogleA" type="checkbox" className="hidden" />
+                <input
+                  checked={pmsSettings.allowParking}
+                  onChange={async () => {
+                    setPmsSetting({ allowParking: !pmsSettings.allowParking });
+                    await axios.patch('/pms', {
+                      allowParking: !pmsSettings.allowParking,
+                    });
+                  }}
+                  id="toogleA"
+                  type="checkbox"
+                  className="hidden"
+                />
                 <div className="toggle__line w-10 h-4 bg-gray-400 rounded-full shadow-inner" />
                 <div className="toggle__dot absolute w-6 h-6 bg-gray-200 rounded-full shadow inset-y-0 left-0" />
               </div>
