@@ -236,7 +236,7 @@ function AddPurchase() {
               const Purchase = {
                 category: document.querySelector('#category').value,
                 product: document.querySelector('#product').value,
-                quantity: document.querySelector('#price').value,
+                quantity: document.querySelector('#quantity').value,
                 tax: document.querySelector('#tax').value,
                 price: document.querySelector('#price').value,
                 description: document.querySelector('#description').value,
