@@ -55,16 +55,14 @@ function manageUsers() {
     let orignalList = data;
     return (e) => {
       const searchPhrase = e.target.value;
-      if (searchPhrase == '') setData(orignalList);
-      else {
-        const matched = response.filter((e) => {
-          if (e.name.includes(searchPhrase) || e.email.includes(searchPhrase))
-            return e;
-        });
-        setData(
-          matched.slice((page - 1) * resultsPerPage, page * resultsPerPage)
-        );
-      }
+
+      const matched = response.filter((e) => {
+        if (e.name.includes(searchPhrase) || e.email.includes(searchPhrase))
+          return e;
+      });
+      setData(
+        matched.slice((page - 1) * resultsPerPage, page * resultsPerPage)
+      );
     };
   };
 

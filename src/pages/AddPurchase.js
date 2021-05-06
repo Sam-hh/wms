@@ -164,7 +164,7 @@ function AddPurchase() {
                     const user = await axios
                       .get(`/users/${e.target.value}`)
                       .catch((err) => console.error(err));
-                    if (user) setUser(user);
+                    if (user) setUser(user.data);
                   }}
                   className="block w-full pl-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                   placeholder="user@wms.com"
@@ -222,7 +222,15 @@ function AddPurchase() {
                 const newUser = await axios
                   .post('/users', user)
                   .catch((err) => console.error(err.response));
-                userId = newUser.data._id;
+                if (newUser) userId = newUser.data._id;
+                else {
+                  setModalStatus({
+                    header: 'Failed to Add parking',
+                    body: 'Check the User Details',
+                  });
+                  setIsModalOpen(true);
+                  return;
+                }
               }
 
               const Purchase = {

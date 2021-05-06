@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import PageTitle from "../components/Typography/PageTitle";
+import React, { useState, useEffect } from 'react';
+import PageTitle from '../components/Typography/PageTitle';
 import {
   TableBody,
   TableContainer,
@@ -12,27 +12,52 @@ import {
   Pagination,
   Button,
   Input,
-} from "@windmill/react-ui";
-import response from "../utils/demo/tableData";
-import { BinIcon, SearchIcon } from "../icons";
+} from '@windmill/react-ui';
+import response from '../utils/demo/tableData';
+import { BinIcon, SearchIcon } from '../icons';
+import axios from 'axios';
 
 function manageUsers() {
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   // pagination setup
+  const [response, setResponse] = useState([]);
   const resultsPerPage = 10;
-  const totalResults = response.length;
+  const [totalResults, setTotalResults] = useState(20);
+  const [modalStatus, setModalStatus] = useState({});
 
   // pagination change control
   function onPageChange(p) {
     setPage(p);
   }
 
+  const searchParking = () => {
+    return (e) => {
+      const searchPhrase = e.target.value;
+
+      const matched = response.filter((e) => {
+        if (e.modal.includes(searchPhrase) || e.number.includes(searchPhrase))
+          return e;
+      });
+      setData(
+        matched.slice((page - 1) * resultsPerPage, page * resultsPerPage)
+      );
+    };
+  };
+
   // on page change, load new sliced data
   // here you would make another server request for new data
   useEffect(() => {
-    setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage));
+    (async () => {
+      const suppliers = await axios.get('/pms/parking');
+      console.log(suppliers);
+      setResponse(suppliers.data);
+      setTotalResults(suppliers.data.length);
+      setData(
+        suppliers.data.slice((page - 1) * resultsPerPage, page * resultsPerPage)
+      );
+    })();
   }, [page]);
 
   return (
@@ -44,6 +69,7 @@ function manageUsers() {
             <SearchIcon className="w-4 h-4" aria-hidden="true" />
           </div>
           <Input
+            onChange={searchParking()}
             className="pl-8 text-gray-700"
             placeholder="Search By vehicle name or number"
             aria-label="Search"
@@ -61,43 +87,72 @@ function manageUsers() {
             </tr>
           </TableHeader>
           <TableBody>
-            {data.map((user, i) => (
-              <TableRow key={i}>
-                <TableCell>
-                  <div className="flex items-center text-sm">
-                    <div>
-                      <p className="font-semibold">{"Vehicle Name"}</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">
-                        {"Vehicle Number"}
-                      </p>
-                    </div>
-                  </div>
-                </TableCell>
-                <TableCell className="pl-2">
-                  <span className="text-sm mx-4">
-                    <span className="has-tooltip">
-                      <span className="tooltip rounded shadow-lg p-1 bg-gray-500 text-white -mt-8 -ml-10">
-                        Remove From Parking
+            {data.map(
+              (vehicle) =>
+                vehicle && (
+                  <TableRow key={vehicle._id}>
+                    <TableCell>
+                      <div className="flex items-center text-sm">
+                        <div>
+                          <p className="font-semibold">{vehicle.modal}</p>
+                          <p className="text-xs text-gray-600 dark:text-gray-400">
+                            {vehicle.number}
+                          </p>
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell className="pl-2">
+                      <span className="text-sm mx-4">
+                        <span className="has-tooltip">
+                          <span className="tooltip rounded shadow-lg p-1 bg-gray-500 text-white -mt-8 -ml-10">
+                            Remove From Parking
+                          </span>
+                          <Button
+                            icon={BinIcon}
+                            onClick={async () => {
+                              const deletedParking = await axios
+                                .delete(`/pms/parking/${vehicle._id}`)
+                                .catch(console.error);
+                              if (deletedParking) {
+                                data.splice(
+                                  data.findIndex((c) => c._id == vehicle._id),
+                                  1,
+                                  response[
+                                    response.findIndex(
+                                      (c) => c._id == vehicle._id
+                                    ) + 1
+                                  ]
+                                );
+                                response.splice(
+                                  response.findIndex(
+                                    (c) => c._id == vehicle._id
+                                  ),
+                                  1
+                                );
+                                setTotalResults((prevCount) => prevCount - 1);
+                              }
+                            }}
+                            layout="link"
+                            aria-label="Like"
+                          />
+                        </span>
                       </span>
-                      <Button
-                        icon={BinIcon}
-                        onClick={() => setIsModalOpen(true)}
-                        layout="link"
-                        aria-label="Like"
-                      />
-                    </span>
-                  </span>
-                </TableCell>
-                <TableCell>
-                  <Badge type={user.status}>{user.status}</Badge>
-                </TableCell>
-                <TableCell>
-                  <span className="text-sm">
-                    {new Date(user.date).toLocaleDateString()}
-                  </span>
-                </TableCell>
-              </TableRow>
-            ))}
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        type={vehicle.type == 'l' ? 'primary' : 'success '}
+                      >
+                        {vehicle.type == 'l' ? 'Light Duty' : 'Heavy Duty'}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-sm">
+                        {new Date(vehicle.entryTime).toLocaleDateString()}
+                      </span>
+                    </TableCell>
+                  </TableRow>
+                )
+            )}
           </TableBody>
         </Table>
         <TableFooter>
