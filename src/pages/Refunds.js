@@ -87,14 +87,14 @@ function Refunds() {
             </tr>
           </TableHeader>
           <TableBody>
-            {data.map((user, i) => (
-              <TableRow key={i}>
+            {data.map((refund) => (
+              <TableRow key={refund._id}>
                 <TableCell>
                   <div className="flex items-center text-sm">
                     <div>
-                      <p className="font-semibold">{'Product Name'}</p>
+                      <p className="font-semibold">{refund.product.name}</p>
                       <p className="text-xs text-gray-600 dark:text-gray-400">
-                        {'Product ID'}
+                        {refund._id}
                       </p>
                     </div>
                   </div>
@@ -103,7 +103,7 @@ function Refunds() {
                   <span className="text-sm mx-4">
                     <span className="has-tooltip">
                       <span className="tooltip rounded shadow-lg p-1 bg-gray-500 text-white -mt-8 -ml-10">
-                        Remove From Parking
+                        Delete Refund
                       </span>
                       <Button
                         icon={BinIcon}
@@ -115,16 +115,16 @@ function Refunds() {
                   </span>
                 </TableCell>
                 <TableCell>
-                  <span className="mx-4">50</span>
+                  <span className="mx-4">{refund.quantity}</span>
                 </TableCell>
                 <TableCell>
                   <span className="text-sm">
-                    {new Date(user.date).toLocaleDateString()}
+                    {new Date(refund.purchaseTime).toLocaleDateString()}
                   </span>
                 </TableCell>
                 <TableCell>
                   <span className="text-sm">
-                    {new Date(user.date).toLocaleDateString()}
+                    {new Date(refund.refundTime).toLocaleDateString()}
                   </span>
                 </TableCell>
               </TableRow>
