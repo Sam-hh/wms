@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import routes from "../../routes/sidebar";
-import { NavLink, Route } from "react-router-dom";
-import * as Icons from "../../icons";
-import SidebarSubmenu from "./SidebarSubmenu";
+import React, { useEffect, useState } from 'react';
+import routes from '../../routes/sidebar';
+import { NavLink, Route } from 'react-router-dom';
+import * as Icons from '../../icons';
+import SidebarSubmenu from './SidebarSubmenu';
 
 function Icon({ icon, ...props }) {
   const Icon = Icons[icon];
@@ -12,8 +12,8 @@ function Icon({ icon, ...props }) {
 function SidebarContent() {
   const [userType, setUserType] = useState([]);
   useEffect(() => {
-    if (localStorage.getItem("userType") == "Employee") setUserType(routes[0]);
-    else setUserType(routes[1]);
+    if (localStorage.getItem('userType') == 'e') setUserType(routes[1]);
+    else setUserType(routes[0]);
   }, []);
 
   return (
