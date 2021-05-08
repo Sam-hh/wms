@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Axios from 'axios';
-import { Input, Label, Button } from '@windmill/react-ui';
+import {
+  Input,
+  Label,
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from '@windmill/react-ui';
 import PageTitle from '../components/Typography/PageTitle';
 import { LockIcon, MailIcon, PhoneIcon, UserIcon } from '../icons';
 
 function addUser() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalStatus, setModalStatus] = useState({});
   return (
     <>
       <PageTitle>Add Users</PageTitle>
@@ -131,10 +141,23 @@ function addUser() {
                   '#generate-password'
                 ).checked,
               };
-              const userInfo = await Axios.post('/users', User).catch(
-                console.error
-              );
-              if (userInfo) console.log(userInfo);
+              const userInfo = await Axios.post('/users', User).catch((err) => {
+                setModalStatus({
+                  header: 'Account creation failed',
+                  body: err.response.data.message,
+                });
+              });
+              if (userInfo) {
+                document.querySelector('#name').value = '';
+                document.querySelector('#email').value = '';
+                document.querySelector('#phone').value = '';
+                document.querySelector('#password').value = '';
+                setModalStatus({
+                  header: 'Account Created',
+                  body: 'Account credentails were sent via email to the user',
+                });
+              }
+              setIsModalOpen(true);
             }}
           >
             Create account
@@ -144,6 +167,18 @@ function addUser() {
           </Button>
         </div>
       </div>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <ModalHeader>{modalStatus.header}</ModalHeader>
+        <ModalBody>{modalStatus.body}</ModalBody>
+        <ModalFooter>
+          <Button
+            onClick={() => setIsModalOpen(false)}
+            className="w-full sm:w-auto"
+          >
+            Proceed
+          </Button>
+        </ModalFooter>
+      </Modal>
     </>
   );
 }
