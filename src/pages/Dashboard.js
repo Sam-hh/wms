@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
+  Card,
+  CardBody,
   Label,
   Button,
   Textarea,
@@ -20,16 +22,26 @@ function Dashboard() {
   const [data, setData] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalStatus, setModalStatus] = useState({});
+  const [userPurchases, setUserPurchases] = useState([]);
+  const [userParkings, setUserParkings] = useState([]);
 
   useEffect(() => {
-    (async () => {
-      const dashboard = await axios
-        .get(`/dashboard`)
-        .catch((err) => console.log(err.response));
-      setData(dashboard.data);
-    })();
+    !(localStorage.getItem('userType') == 'e') &&
+      (async () => {
+        const dashboard = await axios
+          .get(`/home`)
+          .catch((err) => console.log(err.response));
+        setData(dashboard.data);
+      })();
+    localStorage.getItem('userType') == 'e' &&
+      (async () => {
+        const dashboard = await axios
+          .get(`/dashboard`)
+          .catch((err) => console.log(err.response));
+        setData(dashboard.data);
+      })();
   }, []);
-  return (
+  return localStorage.getItem('userType') == 'e' ? (
     <>
       <PageTitle>Dashboard</PageTitle>
 
@@ -141,6 +153,86 @@ function Dashboard() {
           </Button>
         </ModalFooter>
       </Modal>
+    </>
+  ) : (
+    <>
+      <PageTitle>Dashboard</PageTitle>
+      <div
+        className="rounded-lg p-6 mb-6"
+        style={{
+          backgroundColor: '#F8F8F8',
+        }}
+      >
+        <SectionTitle>Your Purchases</SectionTitle>
+        {!userPurchases.length && (
+          <div className="flex justify-center">
+            <PageTitle>No Purchases Yet</PageTitle>
+          </div>
+        )}
+        {!!userPurchases.length && (
+          <div className="grid gap-6 mb-8 md:grid-cols-3">
+            {userPurchases.map((purchase) => (
+              <Card>
+                <CardBody>
+                  <p className="mb-4 font-semibold text-gray-600 dark:text-gray-300">
+                    Purchase Info
+                  </p>
+                  <p className="text-gray-600 dark:text-gray-400 leading-loose">
+                    Name - {purchase.product.name}
+                    <br />
+                    Cost - {purchase.product.price}
+                    <br />
+                    Purchased At -{purchase.purchaseTime}
+                    <br />
+                    Quantity - {purchase.quantity}
+                    <br />
+                    Tax - {purchase.tax}
+                    <br />
+                  </p>
+                </CardBody>
+              </Card>
+            ))}
+          </div>
+        )}
+      </div>
+      <div
+        className="rounded-lg p-6 mb-6"
+        style={{
+          backgroundColor: '#F8F8F8',
+        }}
+      >
+        <SectionTitle>Your Parkings</SectionTitle>
+        {!userParkings.length && (
+          <div className="flex justify-center">
+            <PageTitle>No Parkings Yet</PageTitle>
+          </div>
+        )}
+        {!!userParkings.length && (
+          <div className="grid gap-6 mb-8 md:grid-cols-3">
+            {userPurchases.map((parking) => (
+              <Card>
+                <CardBody>
+                  <p className="mb-4 font-semibold text-gray-600 dark:text-gray-300">
+                    Purchase Info
+                  </p>
+                  <p className="text-gray-600 dark:text-gray-400 leading-loose">
+                    Name - {parking.modal}
+                    <br />
+                    Number - {parking.number}
+                    <br />
+                    Parked At -{parking.entryTime}
+                    <br />
+                    Vehicle type - {parking.type}
+                    <br />
+                    Expected Duration - {parking.duration}
+                    <br />
+                  </p>
+                </CardBody>
+              </Card>
+            ))}
+          </div>
+        )}
+      </div>
     </>
   );
 }
