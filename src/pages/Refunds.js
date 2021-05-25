@@ -9,6 +9,10 @@ import {
   TableRow,
   TableFooter,
   Pagination,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
   Button,
 } from '@windmill/react-ui';
 import PageTitle from '../components/Typography/PageTitle';
@@ -26,6 +30,7 @@ function Refunds() {
   const resultsPerPage = 10;
   const [totalResults, setTotalResults] = useState(20);
   const [modalStatus, setModalStatus] = useState({});
+  const [reload, setReload] = useState(0);
 
   // pagination change control
   function onPageChange(p) {
@@ -43,7 +48,7 @@ function Refunds() {
         suppliers.data.slice((page - 1) * resultsPerPage, page * resultsPerPage)
       );
     })();
-  }, [page]);
+  }, [page, reload]);
   return (
     <>
       <PageTitle>Manage Categories</PageTitle>
@@ -60,11 +65,18 @@ function Refunds() {
               />
               <button
                 onClick={async () => {
-                  const purchaseId = document.querySelector('#refund')
-                    .nodeValue;
+                  const purchaseId = document.querySelector('#refund').value;
                   const refund = await axios
                     .delete(`/shop/${purchaseId}`)
                     .catch((err) => console.error(err));
+                  if (refund) {
+                    setModalStatus({
+                      header: 'Refund Success',
+                      body: 'Refund issued sucessfully',
+                    });
+                    setIsModalOpen(true);
+                    setReload(reload + 1);
+                  }
                 }}
                 className="absolute inset-y-0 right-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
               >
@@ -140,6 +152,18 @@ function Refunds() {
           />
         </TableFooter>
       </TableContainer>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <ModalHeader>{modalStatus.header}</ModalHeader>
+        <ModalBody>{modalStatus.body}</ModalBody>
+        <ModalFooter>
+          <Button
+            onClick={() => setIsModalOpen(false)}
+            className="w-full sm:w-auto"
+          >
+            Proceed
+          </Button>
+        </ModalFooter>
+      </Modal>
     </>
   );
 }

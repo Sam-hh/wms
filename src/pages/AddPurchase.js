@@ -30,7 +30,7 @@ function AddPurchase() {
       const categories = await axios.get('/products/categories');
       console.log(categories);
       setCategories(categories.data);
-      setSelectedCategory(categories.data[0]._id);
+      setSelectedCategory(categories.data[0]?._id);
     })();
   }, []);
   useEffect(() => {
@@ -39,7 +39,7 @@ function AddPurchase() {
         .get(`/products/${selectedCategory}`)
         .catch((err) => console.log(err.response));
       setProducts(products.data);
-      setProductPrice(products.data[0].price);
+      setProductPrice(products.data[0]?.price);
     })();
   }, [selectedCategory]);
   return (
@@ -60,7 +60,7 @@ function AddPurchase() {
                 id="category"
                 onChange={(e) => setSelectedCategory(e.target.value)}
               >
-                {!categories.length && <option>Loading</option>}
+                {!categories.length && <option>No Categories</option>}
                 {categories.map((category) => (
                   <option key={category._id} value={category._id}>
                     {category.name}
@@ -81,7 +81,7 @@ function AddPurchase() {
                 )
               }
             >
-              {!products.length && <option>Loading</option>}
+              {!products.length && <option>No products</option>}
               {products.map((product) => (
                 <option key={product._id} value={product._id}>
                   {product.name}
@@ -113,7 +113,7 @@ function AddPurchase() {
                 id="price"
                 className="block w-full pl-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                 placeholder="₹"
-                value={productPrice * productQuantity}
+                value={productPrice * productQuantity || 0}
               />
               <div className="absolute inset-y-0 flex items-center ml-3 pointer-events-none">
                 <ProductIcon className="w-6 h-6" aria-hidden="true" />
@@ -225,7 +225,7 @@ function AddPurchase() {
                 if (newUser) userId = newUser.data._id;
                 else {
                   setModalStatus({
-                    header: 'Failed to Add parking',
+                    header: 'Failed to Add Purchase',
                     body: 'Check the User Details',
                   });
                   setIsModalOpen(true);
